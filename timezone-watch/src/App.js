@@ -1,25 +1,36 @@
-import logo from './logo.svg';
+import React, { useEffect, useState } from 'react';
 import './App.css';
+import TimezoneWatch from './TimezoneWatch';
 
 function App() {
+  const [clock, setClock] = useState({
+    second: 0,
+    minute: 0,
+    hour: 0
+  });
+
+  useEffect(() => {
+
+    setInterval(() => {
+      const date = new Date();
+      var second = date.getSeconds() / 60;
+      var minute = (second + date.getMinutes()) / 60;
+      var hour = (minute + date.getHours()) / 12;
+      setClock({
+        second: second,
+        minute: minute,
+        hour: hour
+      });
+    }, 1000);
+  }, [])
+
   return (
     <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
+
+      <TimezoneWatch second={clock.second} minute={clock.minute} hour={clock.hour} />
+
     </div>
   );
-}
+};
 
 export default App;
